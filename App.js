@@ -1,20 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { IconArrowLeft } from '@tabler/icons-react-native'
+
+import Home from './src/views/home';
+import Nota from './src/views/nota';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer >
+      <Stack.Navigator initialRouteName="Home" style={styles.container}>
+        <Stack.Screen 
+          name="Home" 
+          component={Home} 
+          options={({ navigation }) => ({
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate('Nota')}>
+                <Text style={styles.new}>+</Text>
+              </TouchableOpacity>            
+            ),
+          })} 
+        />
+        <Stack.Screen 
+          name="Nota" 
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <IconArrowLeft style={styles.back}/>
+              </TouchableOpacity>            
+            )
+          })} 
+          component={Nota} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#000',
   },
+  new: {
+    fontSize: 30,
+    marginRight: 10,
+    tintColor: '#000'
+  },
+  back: {
+    fontSize: 30,
+    color: '#000',
+    marginLeft: 10
+  }
 });
