@@ -4,8 +4,10 @@ import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as 
 import { createStackNavigator } from '@react-navigation/stack';
 import { IconArrowLeft } from '@tabler/icons-react-native';
 import { PaperProvider, MD3LightTheme, MD3DarkTheme, adaptNavigationTheme, Tooltip } from 'react-native-paper';
+
 import Home from './src/views/home';
 import Nota from './src/views/nota';
+import Asistent from './src/views/asistent';
 
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -65,6 +67,17 @@ export default function App() {
               )
             })} 
             component={Nota} />
+          <Stack.Screen 
+            name="Asistent" 
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                  <IconArrowLeft style={styles.back} />
+                </TouchableOpacity>            
+              )
+            })} 
+            component={Asistent} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

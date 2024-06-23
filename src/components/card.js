@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     marginTop: 40,
-    width: 380,
+    width: '100%',
   },
   header: {
     display: 'flex',

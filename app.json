@@ -15,6 +15,9 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.yourcompany.anotai",
+      "versionCode": 1,
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -22,6 +25,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "extra": {
+      "eas": {
+        "projectId": "34c45638-44d3-4186-9269-48c2ac7e635f"
+      }
     }
   }
 }
