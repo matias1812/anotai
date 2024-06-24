@@ -7,7 +7,7 @@ import { PaperProvider, MD3LightTheme, MD3DarkTheme, adaptNavigationTheme, Toolt
 
 import Home from './src/views/home';
 import Nota from './src/views/nota';
-import Asistent from './src/views/asistent';
+import Assistant from './src/views/assistant';
 
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -76,7 +76,7 @@ export default function App() {
                 </TouchableOpacity>            
               )
             })} 
-            component={Asistent} />
+            component={Assistant} />
 
         </Stack.Navigator>
       </NavigationContainer>
