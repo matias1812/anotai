@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Audio } from 'expo-av';
-import * as Permissions from 'expo-permissions';
 
 const useAudioRecorder = () => {
   const [recording, setRecording] = useState(null);
@@ -11,7 +10,7 @@ const useAudioRecorder = () => {
   }, []);
 
   const checkPermission = async () => {
-    const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+    const { status } = await Audio.requestPermissionsAsync();
     if (status !== 'granted') {
       alert('Se requiere permiso para grabar audio');
     }
@@ -19,7 +18,12 @@ const useAudioRecorder = () => {
 
   const startRecording = async () => {
     try {
-      await Audio.requestPermissionsAsync();
+      const { granted } = await Audio.requestPermissionsAsync();
+      if (!granted) {
+        alert('Se requiere permiso para grabar audio');
+        return;
+      }
+
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,

@@ -6,7 +6,7 @@ export default function PopoverIa() {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Asistent')}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Assistant')}>
       <IconSparkles style={{color: '#000'}}/>
     </TouchableOpacity>
   );

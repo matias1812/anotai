@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,7 +8,6 @@ import { PaperProvider, MD3LightTheme, MD3DarkTheme, adaptNavigationTheme, Toolt
 import Home from './src/views/home';
 import Nota from './src/views/nota';
 import Assistant from './src/views/assistant';
-
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
@@ -59,25 +58,31 @@ export default function App() {
           />
           <Stack.Screen 
             name="Nota" 
-            options={({ navigation }) => ({
+            component={Nota} 
+            options={({ navigation, route }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                   <IconArrowLeft style={styles.back} />
                 </TouchableOpacity>            
-              )
+              ),
+              headerRight: () => (
+                <TouchableOpacity onPress={() => route.params?.handleSave()}>
+                  <Text style={styles.save}>Save</Text>
+                </TouchableOpacity>
+              ),
             })} 
-            component={Nota} />
+          />
           <Stack.Screen 
-            name="Asistent" 
+            name="Assistant" 
+            component={Assistant}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                   <IconArrowLeft style={styles.back} />
                 </TouchableOpacity>            
-              )
+              ),
             })} 
-            component={Assistant} />
-
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
@@ -97,5 +102,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#fff',
     marginLeft: 10,
-  }
+  },
+  save: {
+    fontSize: 18,
+    marginRight: 10,
+    color: '#fff',
+  },
 });
