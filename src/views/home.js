@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CardNota from '../components/card';
-import PopoverIa from '../components/PopoverIA';
 
 export default function Home() {
   const [notas, setNotas] = useState([]);
@@ -18,9 +17,6 @@ export default function Home() {
       {notas.map(nota => (
         <CardNota key={nota.id} nota={nota} />
       ))}
-      <View style={styles.popover}>
-        <PopoverIa/>
-      </View>
     </View>
   );
 }
@@ -33,8 +29,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20
   },
-  popover: {
-    width: '100%',
-    marginTop: 350
-  }
 });

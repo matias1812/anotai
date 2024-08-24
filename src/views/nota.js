@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
+import PopoverIa from '../components/PopoverIA';
 
 export default function Nota({ navigation }) {
   const [title, setTitle] = useState('');
@@ -33,6 +34,10 @@ export default function Nota({ navigation }) {
         onChangeText={setDescription}
         multiline
       />
+      <View style={styles.popover}>
+        <PopoverIa/>
+      </View>
+
     </View>
   );
 }
@@ -60,4 +65,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     color: '#fff'
   },
+  popover: {
+    width: '100%',
+    marginTop: 450
+  }
+
 });

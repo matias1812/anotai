@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { IconMicrophone, IconPlayerPause, IconSend } from '@tabler/icons-react-native';
 import useAudioRecorder from '../hooks/useAudioRecorder';
 import useAssistantRequest from '../hooks/useAssistantRequest';
 import { Audio } from 'expo-av';
 
-const InputIa = ({ updateMessages }) => {
+const InputIa = ({ addMessage, addLoadingMessage, updateAssistantMessage, updateAudioTranscript }) => {
   const [text, setText] = useState("");
   const { recording, startRecording, stopRecording, audioUri } = useAudioRecorder();
   const { response, sendRequestToAssistant } = useAssistantRequest();
@@ -14,15 +14,20 @@ const InputIa = ({ updateMessages }) => {
   const [isRecording, setIsRecording] = useState(false);
 
   useEffect(() => {
-    if (response?.audioUrl) {
-      console.log('Playing audio from URL:', response.audioUrl);
-      playAudio(response.audioUrl);
+    if (response) {
+      if (response.transcript) {
+        updateAudioTranscript(response.transcript);
+      } else {
+        updateAssistantMessage(response.text);
+      }
+      if (response.audioUrl) {
+        playAudio(response.audioUrl);
+      }
     }
   }, [response]);
 
   useEffect(() => {
     if (!recording && audioUri) {
-      console.log('Audio URI disponible:', audioUri);
       handleSendAudio();
     }
   }, [recording, audioUri]);
@@ -40,26 +45,29 @@ const InputIa = ({ updateMessages }) => {
 
   const handleSendText = () => {
     if (text.trim() !== "") {
-      sendRequestToAssistant({ text }, updateMessages);
+      addLoadingMessage(text);
+      sendRequestToAssistant({ text }, (userMessage, assistantMessage) => {
+        updateAssistantMessage(assistantMessage);
+      });
       setText("");
     }
   };
 
   const handleSendAudio = () => {
     if (audioUri) {
-      console.log('Enviando audio al asistente:', audioUri);
-      sendRequestToAssistant({ audio: audioUri }, updateMessages);
+      addLoadingMessage('Audio enviado...');
+      sendRequestToAssistant({ audio: audioUri }, (userMessage, assistantMessage) => {
+        updateAssistantMessage(assistantMessage);
+      });
     }
   };
 
   const handleToggleRecording = async () => {
     if (!isRecording) {
       await startRecording();
-      console.log('Grabación iniciada');
       setIsRecording(true);
     } else {
       await stopRecording();
-      console.log('Grabación detenida');
       setIsRecording(false);
     }
   };
